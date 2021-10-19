@@ -29,6 +29,13 @@ namespace AcornHealthAIBackend {
             });
 
             services.AddScoped<AuthenticationService>();
+            services.AddControllers();
+            services.AddCors(c=>c.AddPolicy("TCAPOLICY", builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +48,7 @@ namespace AcornHealthAIBackend {
 
             app.UseRouting();
 
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {

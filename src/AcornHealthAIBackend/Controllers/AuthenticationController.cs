@@ -1,5 +1,6 @@
 ﻿using AcornHealthAIBackend.Models;
 using AcornHealthAIBackend.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace AcornHealthAIBackend.Controllers {
+    [EnableCors("TCAPOLICY")]
     [ApiController]
     [Route("[controller]")]
     public class AuthenticationController : ControllerBase {
