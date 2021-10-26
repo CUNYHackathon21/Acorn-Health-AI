@@ -38,9 +38,21 @@ namespace AcornHealthAIBackend.Controllers {
             };
         }
 
+        [HttpPost("session")]
+        public UserModel GetSession(Session session) {
+            if (string.IsNullOrWhiteSpace(session.Token))
+                return null;
+
+            return AuthenticationService.GetSession(session.Token);
+        }
+
         public class LoginModel {
             public string Email { get; set; }
             public string Password { get; set; }
+        }
+
+        public class Session {
+            public string Token { get; set; }
         }
     }
 }

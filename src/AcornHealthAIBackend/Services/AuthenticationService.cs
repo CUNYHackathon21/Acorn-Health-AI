@@ -6,15 +6,24 @@ using System.Linq;
 namespace AcornHealthAIBackend.Services {
     public class AuthenticationService {
         public List<UserModel> Users { get; } = new();
-        public Dictionary<string, SessionModel> Sessions { get; } = new();
+        public static Dictionary<string, SessionModel> Sessions { get; } = new();
 
         public AuthenticationService() {
             var user = new UserModel() {
                 Email = "asd@asd.com",
                 Password = "asd",
                 FirstName = "asd",
-                LastName = "asdl"
+                LastName = "asdl",
+                DOB = DateTime.Today,
+                Gender = "Attack Helicopter",
+                Records = new()
             };
+
+            // Records
+            user.Records.Add("Asthma");
+            user.Records.Add("Migraines");
+            user.Records.Add("Brain tumor");
+            user.Records.Add("Corona");
 
             Users.Add(user);
         }
@@ -35,6 +44,18 @@ namespace AcornHealthAIBackend.Services {
             Sessions.Add(token, session);
 
             return true;
+        }
+
+        public UserModel GetSession(string token) {
+            if (!Sessions.TryGetValue(token, out var session))
+                return null;
+
+            return Clean(session.User);
+        }
+
+        private UserModel Clean(UserModel classinfo) {
+            classinfo.Password = null;
+            return classinfo;
         }
     }
 }
